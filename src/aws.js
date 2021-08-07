@@ -6,7 +6,8 @@ async function getIp(ec2InstanceId){
   const ec2 = new AWS.EC2();
   const describe = await ec2.describeInstances({InstanceIds: [ec2InstanceId]}).promise()
   console.log(JSON.stringify(describe));
-  return describe
+  console.log(describe.Reservations[0].Instances[0].PublicIpAddress)
+  return describe.Reservations[0].Instances[0].PublicIpAddress
 }
 
 async function startEc2Instance(label, githubRegistrationToken) {

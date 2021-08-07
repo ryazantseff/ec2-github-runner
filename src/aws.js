@@ -4,7 +4,7 @@ const config = require('./config');
 
 async function startEc2Instance(label, githubRegistrationToken) {
   const ec2 = new AWS.EC2();
-  core.info(label)
+  // core.info(label)
   // User data scripts are run as the root user.
   // Docker and git are necessary for GitHub runner and should be pre-installed on the AMI.
   const userData = [

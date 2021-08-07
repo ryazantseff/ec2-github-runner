@@ -2,6 +2,13 @@ const AWS = require('aws-sdk');
 const core = require('@actions/core');
 const config = require('./config');
 
+async function getIp(ec2InstanceId){
+  const ec2 = new AWS.EC2();
+  const describe = await ec2.describeInstances({InstanceIds: [ec2InstanceId]})
+  console.log(describe);
+  return describe
+}
+
 async function startEc2Instance(label, githubRegistrationToken) {
   const ec2 = new AWS.EC2();
   // core.info(label)
@@ -34,9 +41,6 @@ async function startEc2Instance(label, githubRegistrationToken) {
   try {
     const result = await ec2.runInstances(params).promise();
     const ec2InstanceId = result.Instances[0].InstanceId;
-    const describe = await ec2.describeInstances({InstanceIds: [ec2InstanceId]})
-    console.log(describe);
-    core.info("asdkgahjsdghjasgdhjgasdhjgashjdghjasd");
     core.info(`AWS EC2 instance ${ec2InstanceId} is started`);
     return ec2InstanceId;
   } catch (error) {
@@ -83,4 +87,5 @@ module.exports = {
   startEc2Instance,
   terminateEc2Instance,
   waitForInstanceRunning,
+  getIp
 };

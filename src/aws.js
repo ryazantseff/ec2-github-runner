@@ -4,7 +4,7 @@ const config = require('./config');
 
 async function getIp(ec2InstanceId){
   const ec2 = new AWS.EC2();
-  const describe = await ec2.describeInstances({InstanceIds: [ec2InstanceId]})
+  const describe = await ec2.describeInstances({InstanceIds: [ec2InstanceId]}).promise()
   console.log(describe);
   return describe
 }
